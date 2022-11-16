@@ -26,7 +26,6 @@
   "dependencies": {
     "chalk": "^5.1.2",
     "got": "^12.5.3",
-    "lodash": "^4.17.21",
     "parse-duration": "^1.0.2",
     "public-ip": "^6.0.1",
     "table": "^6.8.1",

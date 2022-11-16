@@ -1,6 +1,5 @@
 #! /usr/bin/env node
 const fs = require("fs");
-const _ = require("lodash");
 const publicIp = require("public-ip");
 const parseDuration = require("parse-duration");
 const api = require("../lib/api");
@@ -268,14 +267,14 @@ async function getAllDsnEntries(domainNames) {
         )
     )
   );
-  return _.flatten(dnsEntries);
+  return dnsEntries.flat();
 }
 
 function filterDnsEntries(dnsEntries, names, types) {
   return dnsEntries.filter(
     (entry) =>
-      (_.isEmpty(names) || _.includes(names, entry.name)) &&
-      (_.isEmpty(types) || _.includes(types, entry.type))
+      (names.length || names.includes(entry.name)) &&
+      (types.length || types.includes(entry.type))
   );
 }
 
@@ -309,10 +308,10 @@ function getContent(entry, content, publicIpAddresses) {
 
 async function resolvePublicIpAddresses(dnsEntries) {
   const resolvedPublicIps = {};
-  if (_.some(dnsEntries, (entry) => entry.type === "A")) {
+  if (dnsEntries.some((entry) => entry.type === "A")) {
     resolvedPublicIps.v4 = await publicIp.v4();
   }
-  if (_.some(dnsEntries, (entry) => entry.type === "AAAA")) {
+  if (dnsEntries.some((entry) => entry.type === "AAAA")) {
     resolvedPublicIps.v6 = await publicIp.v6();
   }
   return resolvedPublicIps;
