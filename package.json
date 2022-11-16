@@ -24,14 +24,14 @@
     "prepare": "husky install"
   },
   "dependencies": {
-    "chalk": "^3.0.0",
-    "got": "^10.6.0",
+    "chalk": "^5.1.2",
+    "got": "^12.5.3",
     "lodash": "^4.17.21",
-    "parse-duration": "^0.1.2",
-    "public-ip": "^4.0.0",
-    "table": "^5.4.6",
-    "uuid": "^7.0.2",
-    "yargs": "^15.3.0"
+    "parse-duration": "^1.0.2",
+    "public-ip": "^6.0.1",
+    "table": "^6.8.1",
+    "uuid": "^9.0.0",
+    "yargs": "^17.6.2"
   },
   "devDependencies": {
     "eslint": "^8.27.0",
