@@ -26,7 +26,7 @@
   "dependencies": {
     "chalk": "^3.0.0",
     "got": "^10.6.0",
-    "lodash": "^4.17.15",
+    "lodash": "^4.17.21",
     "parse-duration": "^0.1.2",
     "public-ip": "^4.0.0",
     "table": "^5.4.6",
@@ -34,11 +34,11 @@
     "yargs": "^15.3.0"
   },
   "devDependencies": {
-    "eslint": "^7.6.0",
-    "eslint-config-prettier": "^6.11.0",
+    "eslint": "^8.27.0",
+    "eslint-config-prettier": "^8.5.0",
     "husky": "^8.0.0",
-    "lint-staged": "^10.2.11",
-    "prettier": "^2.0.5"
+    "lint-staged": "^13.0.3",
+    "prettier": "^2.7.1"
   },
   "lint-staged": {
     "*": "prettier --write",
