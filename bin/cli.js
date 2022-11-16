@@ -1,7 +1,7 @@
 #! /usr/bin/env node
 
 import fs from "fs";
-import { publicIp } from "public-ip";
+import { publicIpv4, publicIpv6 } from "public-ip";
 import parseDuration from "parse-duration";
 import * as api from "../lib/api.mjs";
 import { printTable } from "../lib/table.mjs";
@@ -111,6 +111,11 @@ const argv = yargs(hideBin(process.argv))
         default: "5m",
         type: "string",
       },
+      dryRun: {
+        describe:
+          "Run with outputting which changes would be done, but without doing them.",
+        type: "boolean",
+      },
     }
   )
   .example(
@@ -175,7 +180,8 @@ const argv = yargs(hideBin(process.argv))
           argv.domainName,
           argv.name,
           argv.type,
-          parseDuration(argv.interval)
+          parseDuration(argv.interval),
+          argv.dryRun
         );
     }
   } catch (e) {
@@ -222,14 +228,23 @@ function ddnsServiceCommand(
   domainNames,
   names,
   types,
-  intervalInMs
+  intervalInMs,
+  dryRun
 ) {
   let currentIpAddress = null;
   const execute = async () => {
     try {
-      const newIpAddress = await publicIp.v4();
+      const newIpAddress = await publicIpv4();
       if (currentIpAddress !== newIpAddress) {
-        await updateCommand(username, privateKey, domainNames, names, types);
+        await updateCommand(
+          username,
+          privateKey,
+          domainNames,
+          names,
+          types,
+          undefined,
+          dryRun
+        );
         currentIpAddress = newIpAddress;
       }
     } catch (e) {
@@ -277,8 +292,8 @@ async function getAllDsnEntries(domainNames) {
 function filterDnsEntries(dnsEntries, names, types) {
   return dnsEntries.filter(
     (entry) =>
-      (names.length || names.includes(entry.name)) &&
-      (types.length || types.includes(entry.type))
+      (!names.length || names.includes(entry.name)) &&
+      (!types.length || types.includes(entry.type))
   );
 }
 
@@ -313,10 +328,16 @@ function getContent(entry, content, publicIpAddresses) {
 async function resolvePublicIpAddresses(dnsEntries) {
   const resolvedPublicIps = {};
   if (dnsEntries.some((entry) => entry.type === "A")) {
-    resolvedPublicIps.v4 = await publicIp.v4();
+    resolvedPublicIps.v4 = await publicIpv4({
+      fallbackUrls: ["https://ifconfig.co/ip", "https://api.ipify.org"],
+      timeout: 1000,
+    });
   }
   if (dnsEntries.some((entry) => entry.type === "AAAA")) {
-    resolvedPublicIps.v6 = await publicIp.v6();
+    resolvedPublicIps.v6 = await publicIpv6({
+      fallbackUrls: ["https://api64.ipify.org/", "https://ifconfig.co/ip"],
+      timeout: 1000,
+    });
   }
   return resolvedPublicIps;
 }
