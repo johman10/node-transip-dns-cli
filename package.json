@@ -5,6 +5,7 @@
   "bin": {
     "transip-dns-cli": "bin/cli.js"
   },
+  "type": "module",
   "main": "bin/cli.js",
   "keywords": [
     "transip",

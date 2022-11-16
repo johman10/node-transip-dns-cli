@@ -1,9 +1,13 @@
 #! /usr/bin/env node
-const fs = require("fs");
-const publicIp = require("public-ip");
-const parseDuration = require("parse-duration");
-const api = require("../lib/api");
-const { printTable } = require("../lib/table");
+
+import fs from "fs";
+import { publicIp } from "public-ip";
+import parseDuration from "parse-duration";
+import * as api from "../lib/api.mjs";
+import { printTable } from "../lib/table.mjs";
+import yargs from "yargs";
+import { hideBin } from "yargs/helpers";
+
 const entryTableOptions = {
   columns: ["domainName", "name", "type", "expire", "content"],
 };
@@ -11,7 +15,7 @@ const entryUpdateTableOptions = {
   columns: ["domainName", "name", "type", "expire", "oldContent", "content"],
 };
 
-const argv = require("yargs")
+const argv = yargs(hideBin(process.argv))
   .scriptName("")
   .usage("Usage: transip-dns-cli <command>")
   .options({
