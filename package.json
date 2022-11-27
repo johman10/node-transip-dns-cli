@@ -21,13 +21,11 @@
     "registry": "https://registry.npmjs.org/"
   },
   "scripts": {
-    "lint": "prettier --write . && eslint --cache --fix .",
-    "prepare": "husky install"
+    "lint": "prettier --write . && eslint --cache --fix ."
   },
   "dependencies": {
     "chalk": "^5.1.2",
     "got": "^12.5.3",
-    "husky": "^8.0.0",
     "parse-duration": "^1.0.2",
     "public-ip": "^6.0.1",
     "table": "^6.8.1",
@@ -37,11 +35,6 @@
   "devDependencies": {
     "eslint": "^8.27.0",
     "eslint-config-prettier": "^8.5.0",
-    "lint-staged": "^13.0.3",
     "prettier": "^2.7.1"
-  },
-  "lint-staged": {
-    "*": "prettier --write",
-    "*.js": "eslint --cache --fix"
   }
 }
