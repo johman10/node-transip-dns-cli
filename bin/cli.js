@@ -218,7 +218,7 @@ async function updateCommand(
   if (dryRun) {
     logUpdateInfo(dnsEntries, selectedDnsEntries, dnsEntryUpdates);
   } else {
-    await applyUpdates(dnsEntryUpdates, content);
+    await applyUpdates(dnsEntryUpdates);
   }
 }
 
@@ -343,7 +343,7 @@ async function resolvePublicIpAddresses(dnsEntries) {
 }
 
 async function applyUpdates(dnsEntryUpdates) {
-  for (const dnsEntryUpdate in dnsEntryUpdates) {
+  for (const dnsEntryUpdate of dnsEntryUpdates) {
     await api.updateSingleDns(dnsEntryUpdate);
   }
 
