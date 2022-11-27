@@ -343,9 +343,9 @@ async function resolvePublicIpAddresses(dnsEntries) {
 }
 
 async function applyUpdates(dnsEntryUpdates) {
-  await Promise.all(
-    dnsEntryUpdates.map((update) => api.updateSingleDns(update))
-  );
+  for (const dnsEntryUpdate in dnsEntryUpdates) {
+    await api.updateSingleDns(dnsEntryUpdate);
+  }
 
   if (dnsEntryUpdates.length) {
     console.log("Updated the following entries:");
