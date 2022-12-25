@@ -234,7 +234,10 @@ function ddnsServiceCommand(
   let currentIpAddress = null;
   const execute = async () => {
     try {
-      const newIpAddress = await publicIpv4();
+      const newIpAddress = await publicIpv4({
+        fallbackUrls: ["https://ifconfig.co/ip", "https://api.ipify.org"],
+        timeout: 1000,
+      });
       if (currentIpAddress !== newIpAddress) {
         await updateCommand(
           username,
